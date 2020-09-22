@@ -35,23 +35,27 @@ const useStyles = makeStyles({
     },
   },
 });
-const statusColor = ["", "green", "blue"];
+const statusColor = ["", "blue", "green"];
+const statusMessage = ["pending", "progress", "completed"];
 export default function TaskCard({
   updateTaskTitle,
   updateTaskDescription,
   updateTaskStatus,
+  canBeCompleted,
 }) {
   const [status, setStatus] = useState(0);
-
+  const numberModulo = canBeCompleted ? 3 : 2;
   const classes = useStyles({ statusColor: statusColor[status] });
-  console.log("statusColor[status]: ", statusColor[status]);
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Badge
       badgeContent={
         <Fab
-          onClick={() => setStatus((prev) => (prev + 1) % 3)}
+          onClick={() => {
+            setStatus((prev) => (prev + 1) % numberModulo);
+            updateTaskStatus(statusMessage[(status + 1) % numberModulo]);
+          }}
           size="small"
           className={classes.statusButton}
           aria-label="add"

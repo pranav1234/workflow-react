@@ -16,9 +16,12 @@ const useStyles = makeStyles((theme) => ({
   linkButton: {
     textDecoration: "none",
   },
+  searchInput: {
+    borderRadius: 26,
+  },
 }));
 
-const Header = () => {
+const Header = ({ handleSearchText }) => {
   const classes = useStyles();
 
   return (
@@ -28,19 +31,20 @@ const Header = () => {
           <TextField
             size="small"
             id="outlined-basic"
-            label="Outlined"
+            label="Search Workflow"
             variant="outlined"
+            onChange={handleSearchText}
           />
         </Grid>
         <Grid item>
           <Filter />{" "}
         </Grid>
-        <Grid item>
-          <Button variant="contained" startIcon={<AddIcon />}>
-            <Link className={classes.linkButton} to="/workflow/create">
+        <Grid item style={{ marginLeft: "auto" }}>
+          <Link className={classes.linkButton} to="/workflow/create">
+            <Button variant="contained" startIcon={<AddIcon />}>
               Create Workflow
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </Paper>

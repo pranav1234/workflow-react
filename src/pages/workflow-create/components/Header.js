@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ShuffleIcon from "@material-ui/icons/Shuffle";
 
 import { Link } from "react-router-dom";
 
@@ -17,7 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ handleAddNode }) => {
+const Header = ({
+  handleAddNode,
+  handleSaveWorkFlow,
+  setWorkflowName,
+  handleDeleteNode,
+  isAllTaskCompleted,
+  hanldeShuffleNode,
+}) => {
   const classes = useStyles();
 
   return (
@@ -27,17 +36,28 @@ const Header = ({ handleAddNode }) => {
           <TextField
             size="small"
             id="outlined-basic"
-            label="Outlined"
+            label="workflow name"
             variant="outlined"
+            onChange={({ target: { value } }) => setWorkflowName(value)}
           />
         </Grid>
-        <Grid item>
-          <Button variant="contained" startIcon={<AddIcon />}>
-            Shuffle
-          </Button>
+        <Grid style={{ marginLeft: "auto" }} item>
+          {isAllTaskCompleted && (
+            <Button
+              onClick={hanldeShuffleNode}
+              variant="contained"
+              startIcon={<ShuffleIcon />}
+            >
+              Shuffle
+            </Button>
+          )}
         </Grid>
         <Grid item>
-          <Button variant="contained" startIcon={<AddIcon />}>
+          <Button
+            onClick={handleDeleteNode}
+            variant="contained"
+            startIcon={<DeleteIcon />}
+          >
             Delete
           </Button>
         </Grid>
@@ -51,7 +71,7 @@ const Header = ({ handleAddNode }) => {
           </Button>
         </Grid>
         <Grid item>
-          <Button variant="contained" startIcon={<AddIcon />}>
+          <Button onClick={handleSaveWorkFlow} variant="contained">
             Save
           </Button>
         </Grid>
